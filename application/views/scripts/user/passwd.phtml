@@ -1,0 +1,42 @@
+<?php
+
+/**
+ * Default home page view
+ *
+ * @author
+ * @version
+ */
+
+$this->headTitle($this->title);
+$this->placeholder('title')->set($this->title);
+$this->headScript()
+     ->prependFile($this->baseUrl() . '/js/passwordStrengthMeter.js');
+?>
+<?php $this->headScript()->captureStart();?>
+$(document).ready(function() {
+    //ajax check password strength
+    $("#newPassword").keyup(function() {
+        var strength = passwordStrength($(this).val(), '');
+        if ('Too short' == strength) {
+            $(this).removeClass('pass-strong pass-good pass-weak');
+        } else if ('Bad' == strength) {
+            $(this).removeClass('pass-strong pass-good').addClass('pass-weak');
+        } else if ('Good' == strength) {
+            $(this).removeClass('pass-strong pass-weak').addClass('pass-good');
+        } else {
+            $(this).removeClass('pass-weak pass-good').addClass('pass-strong');
+        }
+    });
+});
+<?php $this->headScript()->captureEnd();?>
+
+<div class="ui-tabs ui-widget ui-widget-content ui-corner-all" id="tabs">
+	<?php echo $this->toolbar($this->toolbarset);?>
+	<div class="ui-tabs-panel ui-widget-content ui-corner-bottom">
+		<?php echo $this->render('messages.phtml');?>
+
+		<div class="editform userPasswd">
+		<?php echo $this->form;?>
+		</div>
+    </div>
+</div>

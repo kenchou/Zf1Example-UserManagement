@@ -1,0 +1,39 @@
+<?php
+
+/**
+ * Default home page view
+ *
+ * @author
+ * @version
+ */
+
+$this->headTitle($this->title);
+$this->placeholder('title')->set($this->title);
+?>
+<div class="ui-tabs ui-widget ui-widget-content ui-corner-all" id="tabs">
+	<?php echo $this->toolbar($this->toolbarset);?>
+	<div class="ui-tabs-panel ui-widget-content ui-corner-bottom">
+		<?php echo $this->render('messages.phtml');?>
+		
+		<div class="editform">
+		<h2><?php echo $this->user->Username?> Profile</h2>
+		<dl>
+			<dt>Email:</dt>
+			<dd><?php echo $this->user->Email;?></dd>
+			<dt>Register Time</dt>
+			<dd><?php echo $this->user->RegisterTime;?></dd>
+		</dl>
+		<h2>Roles</h2>
+		<dl>
+		<?php if (count($this->roles)):?>
+		<?php foreach ($this->roles as $role):?>
+			<dt><?php echo $role->RoleName;?></dt>
+			<dd><?php echo $role->Description;?></dd>
+		<?php endforeach;?>
+		<?php else:?>
+			<dt>No role</dt>
+		<?php endif;?>
+		</dl>
+		</div>
+	</div>	
+</div>
