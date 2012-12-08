@@ -1,0 +1,110 @@
+user:
+    login:
+        action: /{module}/{controller}/{action}
+        method: "post"
+        elements:
+            username:
+                type: "text"
+                options:
+                    label: "Username"
+                    required: true
+                    validators:
+                        regex:
+                            validator: "regex"
+                            options: {pattern: "/^[a-zA-Z_][a-zA-Z0-9_@\.-]*$/"}
+                        strlen:
+                            validator: "StringLength"
+                            options: {min: "3", max: "32"}
+                    filters:
+                        lower:
+                            filter: "StringToLower"
+                        trim:
+                            filter: "StringTrim"
+            password:
+                type: "password"
+                options:
+                    label: "Password"
+                    validators:
+                        strlen:
+                            validator: "StringLength"
+                            options: {min: "8"}
+                    required: true
+            submit:
+                type: "submit"
+                options:
+                    label: "Login"
+                    ignore: true
+                    decorators:
+                        viewHelper: "ViewHelper"
+                        htmlTag:
+                            decorator: "HtmlTag"
+                            options: {tag: "dd", class: "singleButton"}
+
+    register:
+        action: /{module}/{controller}/{action}
+        method: "post"
+        elements:
+            username:
+                type: "text"
+                options:
+                    label: "Username"
+                    required: true
+                    validators:
+                        regex:
+                            validator: "regex"
+                            options: {pattern: "/^[a-zA-Z_][a-zA-Z0-9_@\.-]*$/"}
+                        strlen:
+                            validator: "StringLength"
+                            options: {min: "3", max: "32"}
+                    filters:
+                        lower:
+                            filter: "StringToLower"
+                        trim:
+                            filter: "StringTrim"
+            email:
+                type: "text"
+                options:
+                    label: "Email"
+                    required: true
+                    validators:
+                        regex:
+                            validator: "regex"
+                            options: {pattern: "/^[a-zA-Z_][a-zA-Z0-9_@\.-]*$/"}
+                        strlen:
+                            validator: "StringLength"
+                            options: {min: "3", max: "320"}
+                    filters:
+                        lower:
+                            filter: "StringToLower"
+                        trim:
+                            filter: "StringTrim"
+            password:
+                type: "password"
+                options:
+                    label: "Password"
+                    validators:
+                        strlen:
+                            validator: "StringLength"
+                            options: {min: "8"}
+                    required: true
+            password2:
+                type: "password"
+                options:
+                    label: "Confirm Password"
+                    validators:
+                        strlen:
+                            validator: "StringLength"
+                            options: {min: "8"}
+                    required: true
+            submit:
+                type: "submit"
+                options:
+                    label: "Register"
+                    ignore: true
+                    decorators:
+                        viewHelper: "ViewHelper"
+                        htmlTag:
+                            decorator: "HtmlTag"
+                            options:
+                                tag: "dd"
+                                class: "singleButton"

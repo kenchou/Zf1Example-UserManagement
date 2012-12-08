@@ -1,0 +1,85 @@
+production:
+    phpSettings:
+        display_startup_errors: false
+        display_errors: false
+    includePaths:
+        library: APPLICATION_PATH/../library
+    bootstrap:
+        path: APPLICATION_PATH/Bootstrap.php
+        class: "Bootstrap"
+    appnamespace: "Application"
+
+    resources:
+        frontController:
+            controllerDirectory: APPLICATION_PATH/controllers
+            params:
+                displayExceptions: false
+            actionhelperpaths:
+                Application_Controller_Action_Helper: APPLICATION_PATH/helpers
+        layout:
+            layoutPath: APPLICATION_PATH/views/scripts/
+        view:
+            doctype: "XHTML5"
+            charset: "UTF-8"
+            encoding: "UTF-8"
+            helperPath:
+                Application_View_Helper: APPLICATION_PATH/views/helpers
+        log:
+            firebug:
+                writerName: "Firebug"
+                writerParams:
+                    application: "example"
+        multidb:
+            defaultMetadataCache: "metadata"
+            default:
+                adapter: "Pdo_Mysql"
+                host: "127.0.0.1"
+                username: "root"
+                password: "123456"
+                dbname: "example"
+                profiler:
+                    enabled: "true"
+                    class: "Zend_Db_Profiler_Firebug"
+                default: true
+        cachemanager:
+            metadata:
+                frontend:
+                    name: "Core"
+                    customFrontendNaming: false
+                    options:
+                        caching: true
+                        lifetime: 7200
+                        automatic_serialization: true
+                backend:
+                    name: "Apc"
+                frontendBackendAutoload: false
+            default:
+                frontend:
+                    customFrontendNaming: false
+                    name: "Core"
+                    options:
+                        caching: true
+                        lifetime: 7200
+                        automatic_serialization: true
+                backend:
+                    name: "Apc"
+                frontendBackendAutoload: false
+
+staging:
+    _extends: production
+
+testing:
+    _extends: production
+    phpSettings:
+        display_startup_errors: true
+        display_errors: true
+
+development:
+    _extends: production
+    phpSettings:
+        display_startup_errors: true
+        display_errors: true
+    resources:
+        frontController:
+            params:
+                displayExceptions: true

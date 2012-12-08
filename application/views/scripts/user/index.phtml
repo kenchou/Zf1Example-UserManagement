@@ -1,28 +1,29 @@
 <div class="hero-unit">
-		<h1>Welcome to <span class="zf-green">Zend Framework</span> Example!</h1>
-		<p>用户管理栗子</p>
-		<p><a href="https://github.com/kenchou/Zf1Example-UserManagement" class="btn btn-success btn-large">访问GitHub代码库»</a></p>
+	<h1>Welcome to <span class="zf-green">Zend Framework</span> Example!</h1>
+	<p>用户管理栗子</p>
+	<p><a href="https://github.com/kenchou/Zf1Example-UserManagement" class="btn btn-success btn-large">访问GitHub代码库»</a></p>
 </div>
 
 <div class="row">
 	<div class="span4">
 		<h2>用户管理</h2>
-		<p><a target="_blank" href="http://www.xunbaotuan.com">用户管理</a></p>
-		<p><a href="http://www.xunbaotuan.com" class="btn btn-success">用户管理»</a></p>
+		<p><a target="_blank" href="<?php echo $this->url(array('controller'=>'user','action'=>'profile'), 'default', true)?>">个人页面</a></p>
+		<p><a href="<?php echo $this->url(array('controller'=>'user','action'=>'list'), 'default', true)?>" class="btn btn-success">帐号管理»</a></p>
 	</div>
 
-    <div class="span4">
-      <h2>组织机构管理</h2>
-       <p><a target="_blank" href="http://www.lensgo.cn">组织机构管理</a></p>
-      <p><a href="http://www.lensgo.cn" class="btn btn-success">组织机构管理  »</a></p>
-    </div>
+	<div class="span4">
+		<h2>组织机构管理</h2>
+		<p><a target="_blank" href="<?php echo $this->url(array('controller'=>'user','action'=>'role'), 'default', true)?>">组织机构管理</a></p>
+		<p><a href="<?php echo $this->url(array('controller'=>'role','action'=>'list'), 'default', true)?>" class="btn btn-success">组织机构管理  »</a></p>
+	</div>
 
-    <div class="span4">
+	<div class="span4">
 		<h2>系统设置</h2>
 		<p>系统设置</p>
+		<p><a href="<?php echo $this->url(array('controller'=>'acl','action'=>'index'), 'default', true)?>" class="btn btn-success">权限设置  »</a></p>
 	</div>
 
-    <div class="span4">
+	<div class="span4">
 		<h2>帮助与支持</h2>
 	</div>
 
