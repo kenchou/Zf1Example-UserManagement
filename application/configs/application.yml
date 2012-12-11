@@ -2,12 +2,15 @@ production:
     phpSettings:
         display_startup_errors: false
         display_errors: false
+
     includePaths:
         library: APPLICATION_PATH/../library
     bootstrap:
         path: APPLICATION_PATH/Bootstrap.php
         class: "Bootstrap"
     appnamespace: "Application"
+    autoloaderNamespaces:
+        - Ken
 
     resources:
         frontController:
@@ -16,6 +19,8 @@ production:
                 displayExceptions: false
             actionhelperpaths:
                 Application_Controller_Action_Helper: APPLICATION_PATH/helpers
+            plugins:
+                - Ken_Controller_Plugin_Auth
         layout:
             layoutPath: APPLICATION_PATH/views/scripts/
         view:
@@ -24,11 +29,6 @@ production:
             encoding: "UTF-8"
             helperPath:
                 Application_View_Helper: APPLICATION_PATH/views/helpers
-        log:
-            firebug:
-                writerName: "Firebug"
-                writerParams:
-                    application: "example"
         multidb:
             defaultMetadataCache: "metadata"
             default:
@@ -42,7 +42,7 @@ production:
                     class: "Zend_Db_Profiler_Firebug"
                 default: true
         cachemanager:
-            metadata:
+            metadata:           # Cache for MetaData of DbTable
                 frontend:
                     name: "Core"
                     customFrontendNaming: false
@@ -64,7 +64,14 @@ production:
                 backend:
                     name: "Apc"
                 frontendBackendAutoload: false
+        log:
+            firebug:
+                writerName: "Firebug"
+                writerParams:
+                    application: "example"
 
+    staticSalt: "Dck2GC@9mXKyCX&jbaJUt$^bB*2Ds3ec"
+    
 staging:
     _extends: production
 

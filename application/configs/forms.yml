@@ -1,4 +1,4 @@
-user:
+auth:
     login:
         action: /{module}/{controller}/{action}
         method: "post"
@@ -11,10 +11,13 @@ user:
                     validators:
                         regex:
                             validator: "regex"
-                            options: {pattern: "/^[a-zA-Z_][a-zA-Z0-9_@\.-]*$/"}
+                            options: 
+                                pattern: "/^[a-zA-Z_][a-zA-Z0-9_@\.-]*$/"
                         strlen:
                             validator: "StringLength"
-                            options: {min: "3", max: "32"}
+                            options: 
+                                min: 3
+                                max: 32
                     filters:
                         lower:
                             filter: "StringToLower"
@@ -27,7 +30,8 @@ user:
                     validators:
                         strlen:
                             validator: "StringLength"
-                            options: {min: "8"}
+                            options:
+                                min: 8
                     required: true
             submit:
                 type: "submit"
@@ -38,8 +42,11 @@ user:
                         viewHelper: "ViewHelper"
                         htmlTag:
                             decorator: "HtmlTag"
-                            options: {tag: "dd", class: "singleButton"}
+                            options:
+                                tag: "dd"
+                                class: "singleButton"
 
+user:
     register:
         action: /{module}/{controller}/{action}
         method: "post"
@@ -52,10 +59,13 @@ user:
                     validators:
                         regex:
                             validator: "regex"
-                            options: {pattern: "/^[a-zA-Z_][a-zA-Z0-9_@\.-]*$/"}
+                            options:
+                                pattern: "/^[a-zA-Z_][a-zA-Z0-9_@\.-]*$/"
                         strlen:
                             validator: "StringLength"
-                            options: {min: "3", max: "32"}
+                            options:
+                                min: 3
+                                max: 32
                     filters:
                         lower:
                             filter: "StringToLower"
@@ -69,10 +79,13 @@ user:
                     validators:
                         regex:
                             validator: "regex"
-                            options: {pattern: "/^[a-zA-Z_][a-zA-Z0-9_@\.-]*$/"}
+                            options:
+                                pattern: "/^[a-zA-Z_][a-zA-Z0-9_@\.-]*$/"
                         strlen:
                             validator: "StringLength"
-                            options: {min: "3", max: "320"}
+                            options:
+                                min: 3
+                                max: 320
                     filters:
                         lower:
                             filter: "StringToLower"
@@ -85,7 +98,8 @@ user:
                     validators:
                         strlen:
                             validator: "StringLength"
-                            options: {min: "8"}
+                            options:
+                                min: 8
                     required: true
             password2:
                 type: "password"
@@ -94,12 +108,78 @@ user:
                     validators:
                         strlen:
                             validator: "StringLength"
-                            options: {min: "8"}
+                            options:
+                                min: 8
                     required: true
             submit:
                 type: "submit"
                 options:
                     label: "Register"
+                    ignore: true
+                    decorators:
+                        viewHelper: "ViewHelper"
+                        htmlTag:
+                            decorator: "HtmlTag"
+                            options:
+                                tag: "dd"
+                                class: "singleButton"
+profile:
+    edit:
+        action: /{module}/{controller}/{action}
+        method: "post"
+        attribs:
+            enctype: "multipart/form-data"
+        elements:
+            avatar:
+                type: "File"
+                options:
+                    label: "Avatar"
+                    description: "You can upload *.jpg, *.png and *.gif"
+                    require: false
+                    validators:
+                        ext:
+                            validator: "Extension"
+                            extension: "jpg,jpeg,png,gif"
+                            messages:
+                                fileExtensionFalse = "It only supports jpg,jpeg,png,gif format."
+
+            realname:
+                type: "text"
+                options:
+                    label: "Real Name"
+                    required: false
+                    validators:
+                        strlen:
+                            validator: "StringLength"
+                            options: 
+                                min: 3
+                                max: 32
+                    filters:
+                        lower:
+                            filter: "StringToLower"
+                        trim:
+                            filter: "StringTrim"
+            birthday:
+                type: "text"
+                options:
+                    label: "Birthday"
+                    required: false
+                    validators:
+                        strlen:
+                            validator: "StringLength"
+                            options: 
+                                min: 3
+                                max: 32
+                    filters:
+                        lower:
+                            filter: "StringToLower"
+                        trim:
+                            filter: "StringTrim"
+
+            submit:
+                type: "submit"
+                options:
+                    label: "Update"
                     ignore: true
                     decorators:
                         viewHelper: "ViewHelper"

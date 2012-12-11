@@ -5,7 +5,7 @@
  * @author Ken
  *
  */
-class UserController extends Zend_Controller_Action
+class ProfileController extends Zend_Controller_Action
 {
 
     public function init()
@@ -15,24 +15,29 @@ class UserController extends Zend_Controller_Action
 
     public function indexAction()
     {
-        // action body
+        if (Zend_Auth::getInstance()->hasIdentity()) {
+            $sessionUser = Zend_Auth::getInstance()->getIdentity();
+            $id = $sessionUser->id;
+            $resource = $this->_helper->modelResource('UserMapper');
+            $user = $resource->find($id)->getIterator()->current();
+
+            $this->view->user = $user;
+        }
     }
 
-    public function registerAction()
+    public function editAction()
     {
-        /* @var $form Zend_Form */
         $form = $this->_helper->form();
         $request = $this->getRequest();
 
         if ($request->isPost() && $form->isValid($request->getPost())) {
-            $username = $form->getValue('username');
-            $password = $form->getValue('password');
+
             $data = $form->getValues();
 
             $userResource = $this->_helper->modelResource('UserMapper');
             $user = $userResource->createModel($data);
 
-            $user->save();
+            //$user->save();
 
         }
         $this->view->form = $form;

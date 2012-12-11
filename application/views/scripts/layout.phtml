@@ -43,11 +43,11 @@ echo $this->headScript()
 				<!--/.nav-collapse -->
 				<div style="float:right;color:white;">
 <?php if($this->authIdentity() === null){?>
-		<a href="<?php echo $this->url(array('controller'=>'user','action'=>'login'), 'default',true)?>">Login</a>
+		<a href="<?php echo $this->url(array('controller'=>'auth','action'=>'login'), 'default',true)?>">Login</a>
 		| <a href="<?php echo $this->url(array('controller'=>'user','action'=>'register'), 'default',true)?>">Register</a>
 <?php }else{ ?>
-		<a href="<?php echo $this->url(array('controller'=>'user','action'=>'index'), 'default',true)?>"><?php echo $this->authIdentity(); ?></a>
-		| <a href="<?php echo $this->url(array('controller'=>'user','action'=>'logout'), 'default',true)?>">Logout</a>
+		<a href="<?php echo $this->url(array('controller'=>'profile','action'=>'index'), 'default',true)?>"><?php echo $this->authIdentity(); ?></a>
+		| <a href="<?php echo $this->url(array('controller'=>'auth','action'=>'logout'), 'default',true)?>">Logout</a>
 <?php } ?>
 				</div>
 			</div>

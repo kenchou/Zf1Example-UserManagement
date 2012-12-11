@@ -17,11 +17,11 @@ class Application_View_Helper_AuthIdentity extends Zend_View_Helper_Abstract
      */
     public function authIdentity()
     {
-        if (Zend_Auth::getInstance()->hasIdentity()) {
-            $storage = Zend_Auth::getInstance()->getStorage();
-            $session = new Zend_Session_Namespace($storage->getNamespace());
-            $user = $session->user;
-            return $user->nickname ? $user->nickname : (empty($user->email) ? $user->fullname : $user->email);
+        $auth = Zend_Auth::getInstance();
+        if ($auth->hasIdentity()) {
+            $user = $auth->getIdentity();
+
+            return empty($user->realname) ? (empty($user->email) ? $user->username : $user->email) : $user->realname;
         }
         return null;
     }

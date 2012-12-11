@@ -11,26 +11,31 @@ $this->headTitle($this->title);
 $this->placeholder('title')->set($this->title);
 ?>
 <div class="ui-tabs ui-widget ui-widget-content ui-corner-all" id="tabs">
+	<div><a href="<?php echo $this->url(array('action'=>'edit'))?>">Edit</a></div>
 	<div class="ui-tabs-panel ui-widget-content ui-corner-bottom">
+<?php if ($this->user) { $user = $this->user;?>
 		<div class="editform">
-		<h2><?php echo $this->user->Username?> Profile</h2>
+		<h2><?php echo $user->username?> Profile</h2>
 		<dl>
 			<dt>Email:</dt>
-			<dd><?php echo $this->user->Email;?></dd>
+			<dd><?php echo $user->email?></dd>
+			<dt>Real Name:</dt>
+			<dd><?php echo $user->realname?></dd>
 			<dt>Register Time</dt>
-			<dd><?php echo $this->user->RegisterTime;?></dd>
+			<dd><?php echo $user->registerTime;?></dd>
 		</dl>
 		<h2>Roles</h2>
 		<dl>
 		<?php if (count($this->roles)):?>
 		<?php foreach ($this->roles as $role):?>
-			<dt><?php echo $role->RoleName;?></dt>
-			<dd><?php echo $role->Description;?></dd>
+			<dt><?php echo $role->rolename;?></dt>
+			<dd><?php echo $role->description;?></dd>
 		<?php endforeach;?>
 		<?php else:?>
 			<dt>No role</dt>
 		<?php endif;?>
 		</dl>
 		</div>
+<?php }?>
 	</div>
 </div>
