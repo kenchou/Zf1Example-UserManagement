@@ -42,6 +42,14 @@ class Application_Model_ModelAbstract extends ArrayObject
         return $resource;
     }
 
+    public function populate($data = array())
+    {
+        foreach ($data as $k => $v) {
+            $this[$k] = $v;
+        }
+        return $this;
+    }
+
     public function toArray()
     {
         return $this->getArrayCopy();
@@ -51,5 +59,6 @@ class Application_Model_ModelAbstract extends ArrayObject
     {
         $resource = $this->getMapper();
         $resource->save($this);
+        return $this;
     }
 }

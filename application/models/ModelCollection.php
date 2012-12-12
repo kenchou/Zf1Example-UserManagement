@@ -1,6 +1,6 @@
 <?php
 /**
- * Model Abstract
+ * Model Collection (resultset)
  * use Traits in php 5.4
  * @author Ken
  *

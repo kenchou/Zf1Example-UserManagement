@@ -33,7 +33,7 @@ echo $this->headScript()
 				</a> <a href="/" class="brand">Zend Framework 1.x Example</a>
 				<div class="nav-collapse">
 					<ul class="nav">
-						<li class="active"><a href="/">Home</a></li>
+						<li class="active"><a href="<?php echo $this->url(array('controller'=>'index','action'=>'index'))?>">Home</a></li>
 						<li><a href="<?php echo $this->url(array('controller'=>'user', 'action'=>'index', 'module'=>'default'), 'default', true)?>">个人中心</a></li>
 						<li><a href="<?php echo $this->url(array('controller'=>'system', 'action'=>'settings', 'module'=>'default'), 'default', true)?>">系统设置</a></li>
 						<li><a href="https://github.com/kenchou/Zf1Example-UserManagement">源代码下载</a></li>

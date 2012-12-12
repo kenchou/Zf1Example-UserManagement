@@ -7,7 +7,6 @@
  */
 class Application_Model_User extends Application_Model_ModelAbstract
 {
-    protected $_mapperNamespace = 'Application_Model_Mapper';
     protected $_defaultResourceName = 'UserMapper';
     protected $_mapperClass = 'Application_Model_Mapper_UserMapper';
 

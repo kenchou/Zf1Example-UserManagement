@@ -1,8 +1,16 @@
 <?php
+/**
+ * User
+ * @author Ken
+ *
+ */
 class Application_Model_Mapper_UserMapper extends Application_Model_Mapper_MapperAbstract
 {
-    protected $_dbTableClass = 'Application_Model_DbTable_Users';
     protected $_modelClass = 'Application_Model_User';
+    protected $_dbTableNamespace = 'Application_Model_DbTable';
+    protected $_dbTableClass = 'Application_Model_DbTable_Users';
+    protected $_dbTableName = 'Users';
+
     protected $_colsMap = array(
         'id'       => 'id',
         'username' => 'username',
@@ -18,7 +26,6 @@ class Application_Model_Mapper_UserMapper extends Application_Model_Mapper_Mappe
 
     public function save(Application_Model_User $model)
     {
-        Zend_Debug::dump($model, __METHOD__);
         $data = $this->_modelToCols($model);
         if (null === $model->password) {
             unset($data['password']);
@@ -26,7 +33,6 @@ class Application_Model_Mapper_UserMapper extends Application_Model_Mapper_Mappe
         if (null === $model->status) {
             $data['status'] = 0;
         }
-        Zend_Debug::dump($data, __METHOD__);
         $row = $this->_fetchRowOrCreate($data);
         $row->setFromArray($data);
         $row->save();

@@ -1,0 +1,39 @@
+<?php
+
+/**
+ * Default home page view
+ *
+ * @author
+ * @version
+ */
+
+$this->headTitle($this->title);
+$this->placeholder('title')->set($this->title);
+?>
+<?php echo $this->render('resource/_toolbar.phtml')?>
+
+<div class="ui-tabs ui-widget ui-widget-content ui-corner-all" id="tabs">
+	<div class="ui-tabs-panel ui-widget-content ui-corner-bottom">
+		<form id="listform" action="<?php echo $this->url(array('module' => 'admin', 'controller' => 'resource', 'action' => 'delete'), null, true);?>" method="post">
+
+		<div class="datagrid dateList">
+			<table border="1">
+				<caption>Resource list</caption>
+				<tr>
+					<th>ID</th>
+					<th>Resource Name</th>
+					<th>Description</th>
+				</tr>
+<?php foreach ($this->resources as $resource) {?>
+				<tr>
+					<td><?php echo $resource->id?></td>
+					<td><a href="<?php echo $this->url(array('controller'=>'resource','action'=>'view','id'=>$resource->id))?>"><?php echo $resource->name?></a></td>
+					<td><?php echo $resource->description?></td>
+				</tr>
+<?php }//endforeach?>
+			</table>
+		</div>
+		</form>
+		<div class="pannelFloat"></div>
+	</div>
+</div>

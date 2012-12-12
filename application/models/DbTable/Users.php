@@ -1,6 +1,6 @@
 <?php
 /**
- * AdminUsers
+ * Users
  *
  * @author ken
  * @version

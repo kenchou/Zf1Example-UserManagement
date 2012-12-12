@@ -1,11 +1,30 @@
 <?php
+/**
+ * abstract mapper
+ * @author Ken
+ *
+ */
 class Application_Model_Mapper_MapperAbstract
 {
-    protected $_dbTableClass = null;
-    protected $_modelClass = null;
-    protected $_colsMap = array();
+    protected $_dbTableNamespace = 'Application_Model_DbTable';
+    protected $_dbTableName;
+    protected $_dbTableClass;
+    protected $_modelClass;
 
+    protected $_colsMap = array();
     protected $_dbTable;
+
+    public function loadResource($name, $type = 'dbtable')
+    {
+        $name = ucfirst($name);
+        $class = $this->_dbTableNamespace . '_' . $name;
+
+        $resourceLoaders = Zend_Loader_Autoloader::getInstance()->getClassAutoloaders($class);
+        foreach ($resourceLoaders as $loader) {
+            return $loader->load($name, $type);
+        }
+        throw new RuntimeException('No loader for ' . $class);
+    }
 
     /**
      *
@@ -14,7 +33,7 @@ class Application_Model_Mapper_MapperAbstract
     public function getDbTable()
     {
         if (null == $this->_dbTable) {
-            $this->setDbTable($this->_dbTableClass);
+            $this->setDbTable($this->_dbTableName);
         }
         return $this->_dbTable;
     }
@@ -22,12 +41,12 @@ class Application_Model_Mapper_MapperAbstract
     public function setDbTable($dbTable)
     {
         if (is_string($dbTable)) {
-            $dbTable = new $dbTable;
+            $dbTable = $this->loadResource($dbTable);
         }
+
         $this->_dbTable = $dbTable;
         return $this;
     }
-
 
     /**
      *
@@ -170,6 +189,7 @@ class Application_Model_Mapper_MapperAbstract
     public function fetchAll($select = null)
     {
         $table = $this->getDbTable();
+
         return $this->createCollection($table->fetchAll($select));
     }
 
@@ -189,55 +209,25 @@ class Application_Model_Mapper_MapperAbstract
         return $this->fetchAll($select);
     }
 
-    public function fetchAllActive($ids = array())
+    public function __call($method, $params)
     {
-
-            $select = $this->getDbTable()->select();
-
-        $select->where('CONVERT(varchar(10), getdate(), 120) <= EndTime');
-
-        if ($ids) {
-            $select->where('id in (?)',$ids);
+        $magicMethodFindBy = 'findBy';
+        if (false !== ($p = stripos($method, $magicMethodFindBy))) {
+            $col = lcfirst(substr($method, $p+strlen($magicMethodFindBy)));
+            if (isset($this->_colsMap[$col])) {
+                $col = $this->_colsMap[$col];
+            }
+            $param = $params[0];
+            $op = is_array($param) ? ' IN (?)' : ' = ?';
+            $select = $this->getSqlSelect();
+            $select->where($col . $op, $param);
+            return $this->fetchAll($select);
         }
-        return $this->fetchAllUser($select);
+        throw new RuntimeException(sprintf('Call undefined method %s::%s', get_class($this), $method));
     }
 
-    public function fetchUserning($idList = null)
+    public function getSqlSelect()
     {
-        $select = $this->getDbTable()->select();
-        if (null !== $idList) {
-            $select->where('Id IN (?)', $idList);
-        }
-        $select->where('CONVERT(varchar(10), getdate(), 120) < StartTime');
-        return $this->fetchAllUser($select);
-    }
-
-    public function fetchInProgress()
-    {
-        $select = $this->getDbTable()->select();
-        $select->where('CONVERT(varchar(10), getdate(), 120) >= StartTime')
-               ->where('CONVERT(varchar(10), getdate(), 120) <= EndTime');
-        return $this->fetchAllUser($select);
-    }
-
-    public function fetchExpired()
-    {
-        $select = $this->getDbTable()->select();
-        $select->where('CONVERT(varchar(10), getdate(), 120) > EndTime');
-        return $this->fetchAllUser($select);
-    }
-
-    public function delete(Application_Model_ModelAbstract $model)
-    {
-        $data = $this->_modelToCols($model);
-        $table = $this->getDbTable();
-        $row = $table->find($model->id)->current();
-        if (empty($row)) {
-            $row = $table->createRow($data);
-        } else {
-            unset($data['Id']);
-            $row->setFromArray($data);
-        }
-        return $row->delete();
+        return $this->getDbTable()->select();
     }
 }

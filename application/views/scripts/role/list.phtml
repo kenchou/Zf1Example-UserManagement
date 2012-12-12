@@ -1,0 +1,46 @@
+<?php
+
+/**
+ * Default home page view
+ *
+ * @author
+ * @version
+ */
+
+$this->headTitle($this->title);
+$this->placeholder('title')->set($this->title);
+?>
+<?php echo $this->render('role/_toolbar.phtml')?>
+
+<div class="ui-tabs ui-widget ui-widget-content ui-corner-all" id="tabs">
+	<div class="ui-tabs-panel ui-widget-content ui-corner-bottom">
+
+		<form id="listform" action="<?php echo $this->url(array('module' => 'admin', 'controller' => 'role', 'action' => 'delete'), null, true);?>" method="post">
+		<div class="datagrid listTable dateList">
+<?php if ($this->roles) {?>
+			<table border="1">
+				<caption>Role list</caption>
+				<tr>
+					<th>ID</th>
+					<th>Role Name</th>
+					<th>Description</th>
+					<th>Actions</th>
+				</tr>
+<?php foreach ($this->roles as $role) {?>
+				<tr>
+					<td><?php echo $role->id?></td>
+					<td><a href="<?php echo $this->url(array('controller'=>'role','action'=>'authorize','roleId'=>$role->id))?>"><?php echo $role->name?></a></td>
+					<td><?php echo $role->description?></td>
+					<td>
+						  <a href="<?php echo $this->url(array('controller'=>'role','action'=>'edit','id'=>$role->id))?>">Edit</a>
+						| <a href="<?php echo $this->url(array('controller'=>'role','action'=>'authorize','roleId'=>$role->id))?>">Authorize</a>
+					</td>
+				</tr>
+<?php }//endforeach?>
+			</table>
+<?php }//endif?>
+		</div>
+		</form>
+		<div class="pannelFloat"></div>
+	</div>
+</div>

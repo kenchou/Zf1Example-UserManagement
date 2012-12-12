@@ -41,10 +41,10 @@ class AuthController extends Zend_Controller_Action
             if ($rs->isValid()) {
                 $storage = $auth->getStorage();
                 $storage->write($authAdapter->getResultRowObject(array(
-                        'id',
-                        'username',
-                        'realname',
-                        'email',
+                    'id',
+                    'username',
+                    'realname',
+                    'email',
                 )));
 
                 $authUser = $auth->getIdentity();

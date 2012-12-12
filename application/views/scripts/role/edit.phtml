@@ -1,0 +1,24 @@
+<?php
+
+/**
+ * Default home page view
+ *
+ * @author
+ * @version
+ */
+
+$this->headTitle($this->title);
+$this->placeholder('title')->set($this->title);
+
+$this->headScript()
+     ->appendFile($this->baseUrl() . '/scripts/jquery.multiselects.packed.js');
+?>
+<?php echo $this->render('role/_toolbar.phtml')?>
+
+<div class="ui-tabs ui-widget ui-widget-content ui-corner-all" id="tabs">
+   <div class="ui-tabs-panel ui-widget-content ui-corner-bottom">
+		<div class="editform">
+		<?php echo $this->form;?>
+		</div>
+	</div>
+</div>
