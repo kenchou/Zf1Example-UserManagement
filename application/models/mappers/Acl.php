@@ -6,8 +6,10 @@
  */
 class Application_Model_Mapper_Acl extends Application_Model_Mapper_MapperAbstract
 {
-    protected $_defaultModelClass = 'AclRule';
-    protected $_defaultDbTableClass = 'Acl';
+    protected $_modelClass = 'Application_Model_AclRule';
+    protected $_dbTableClass = 'Application_Model_DbTable_Acl';
+    protected $_dbTableName = 'Acl';
+
     protected $_colsMap = array(
         'id' => 'acl_id',
         'roleId' => 'role_id',
@@ -51,16 +53,23 @@ class Application_Model_Mapper_Acl extends Application_Model_Mapper_MapperAbstra
         return $this;
     }
 
-    public function fetchAllByRole($role)
+    /**
+     * find Acl rules by role id
+     * @param unknown $role
+     * @return Ambigous <Ambigous, multitype:, Application_Model_ModelCollection, Application_Model_ModelAbstract>
+     */
+    public function findByRole($role)
     {
         $table = $this->getDbTable();
-        $select = $table->select()->setIntegrityCheck(false);
-        $select->join(array('s'=>'Application_resources', ''));
+        $select = $this->getSqlSelect()->setIntegrityCheck(false);
+        $select->from(array('i'=> $table->info('name')));
+        $select->join(array('s'=>'resources'), 's.id=i.resource_id');
         if (is_array($role)) {
             $select->where('role_id IN(?)', $role);
         } else {
             $select->where('role_id=?', $role);
         }
+
         return $this->fetchAll($select);
     }
 }

@@ -7,8 +7,8 @@
  */
 class Application_Model_User extends Application_Model_ModelAbstract
 {
-    protected $_defaultResourceName = 'UserMapper';
-    protected $_mapperClass = 'Application_Model_Mapper_UserMapper';
+    protected $_defaultResourceName = 'Users';
+    protected $_mapperClass = 'Application_Model_Mapper_Users';
 
     public static $staticSalt = 'Kq6Dc%TX$2*xv3C^*jn$&gjXSfwPK8r^Q$E3faQpkuY9S6n4%8yYeshNMjXnT4ms';
 
@@ -51,8 +51,22 @@ class Application_Model_User extends Application_Model_ModelAbstract
             $this->password = $this->passwordHash($this->password,
                     $this->salt);
         }
-Zend_Debug::dump($this, __METHOD__);
         $this->getMapper()->save($this);
         return $this;
     }
+
+    /**
+     * find all roles of this user
+     * @return Application_Model_ModelCollection
+     */
+    public function fetchRoles()
+    {
+        return $this->getMapper()->findRolesByUser($this->id);
+    }
+
+    public function fetchAclRules($roleIdList = array())
+    {
+        return $this->getMapper()->findAclByRole($roleIdList);
+    }
+
 }

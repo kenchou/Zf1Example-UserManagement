@@ -1,0 +1,19 @@
+<?php
+
+/**
+ * Default error view
+ *
+ * @author
+ * @version
+ */
+
+$this->headTitle('Content Sites CMS Error Page');
+$this->placeholder('title')->set('Content Sites CMS - ' . $this->title);
+?>
+<h1>403 - Forbidden</h1>
+<?php if ($this->message): ?>
+	<p>The following error occurred:</p>
+<pre>
+<?php echo $this->message ?>
+</pre>
+<?php endif; ?>

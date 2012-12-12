@@ -23,7 +23,7 @@ class RoleController extends Zend_Controller_Action
      */
     public function listAction ()
     {
-        $roleResource = $this->_helper->modelResource('RoleMapper');
+        $roleResource = $this->_helper->modelResource('Roles');
         $roles = $roleResource->fetchAll();
         $this->view->roles = $roles;
     }
@@ -56,7 +56,7 @@ class RoleController extends Zend_Controller_Action
         $id = $this->_getParam('id');
         if (empty($id)) throw new InvalidArgumentException('Missing parameter id.');
 
-        $roleResource = $this->_helper->modelResource('RoleMapper');
+        $roleResource = $this->_helper->modelResource('Roles');
         $role = $roleResource->find($id)->getIterator()->current();
 
         $form = $this->_helper->form();
@@ -91,7 +91,7 @@ class RoleController extends Zend_Controller_Action
             $data = $form->getValues();
 
             /* @var $roleResource Application_Model_Mapper_MapperAbstract */
-            $roleResource = $this->_helper->modelResource('RoleMapper');
+            $roleResource = $this->_helper->modelResource('Roles');
 
             $role = $roleResource->findByName($data['name']);
 

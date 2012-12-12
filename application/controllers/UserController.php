@@ -29,7 +29,7 @@ class UserController extends Zend_Controller_Action
             $password = $form->getValue('password');
             $data = $form->getValues();
 
-            $userResource = $this->_helper->modelResource('UserMapper');
+            $userResource = $this->_helper->modelResource('Users');
             $user = $userResource->createModel($data);
 
             $user->save();

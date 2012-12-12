@@ -40,12 +40,17 @@ class AuthController extends Zend_Controller_Action
 
             if ($rs->isValid()) {
                 $storage = $auth->getStorage();
-                $storage->write($authAdapter->getResultRowObject(array(
+                $authInfo = $authAdapter->getResultRowObject(array(
                     'id',
                     'username',
                     'realname',
                     'email',
-                )));
+                ));
+                $userResource = $this->_helper->modelResource('Users');
+                $user = $userResource->find($authInfo->id)->getIterator()->current();
+                $authInfo->userModel = $user;    //attach model to session
+
+                $storage->write($authInfo);
 
                 $authUser = $auth->getIdentity();
 
@@ -64,7 +69,9 @@ class AuthController extends Zend_Controller_Action
 
     public function logoutAction()
     {
-
+        $user = Zend_Auth::getInstance()->getIdentity();
+        Zend_Auth::getInstance()->clearIdentity();
+        Zend_Session::expireSessionCookie();
     }
 }
 

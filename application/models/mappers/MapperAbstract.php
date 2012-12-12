@@ -1,6 +1,7 @@
 <?php
 /**
  * abstract mapper
+ * this mapper based on db
  * @author Ken
  *
  */
@@ -14,6 +15,20 @@ class Application_Model_Mapper_MapperAbstract
     protected $_colsMap = array();
     protected $_dbTable;
 
+    public function __construct()
+    {
+        //check necessary vars
+        if (empty($this->_dbTableName)) {
+            throw new RuntimeException(sprintf('need dbTableName in %s', get_class($this)));
+        }
+    }
+
+    /**
+     * load resource. mappers, dbTable, etc..
+     * @param unknown $name
+     * @param string $type
+     * @throws RuntimeException
+     */
     public function loadResource($name, $type = 'dbtable')
     {
         $name = ucfirst($name);
@@ -32,24 +47,28 @@ class Application_Model_Mapper_MapperAbstract
      */
     public function getDbTable()
     {
-        if (null == $this->_dbTable) {
+        if (null === $this->_dbTable) {
             $this->setDbTable($this->_dbTableName);
         }
         return $this->_dbTable;
     }
 
+    /**
+     * set dbTable
+     * @param unknown $dbTable
+     * @return Application_Model_Mapper_MapperAbstract
+     */
     public function setDbTable($dbTable)
     {
         if (is_string($dbTable)) {
             $dbTable = $this->loadResource($dbTable);
         }
-
         $this->_dbTable = $dbTable;
         return $this;
     }
 
     /**
-     *
+     * create a new model
      * @param array $data
      * @return Application_Model_ModelAbstract
      */
@@ -63,7 +82,7 @@ class Application_Model_Mapper_MapperAbstract
     }
 
     /**
-     *
+     * create resultset as  collection
      * @param array $resultset
      * @return array
      */
@@ -170,7 +189,11 @@ class Application_Model_Mapper_MapperAbstract
         return $row;
     }
 
-
+    /**
+     * Save model to db
+     * @param Application_Model_ModelAbstract $model
+     * @return Application_Model_Mapper_MapperAbstract
+     */
     public function save(Application_Model_ModelAbstract $model)
     {
         $data = $this->_modelToCols($model);
@@ -181,11 +204,21 @@ class Application_Model_Mapper_MapperAbstract
         return $this;
     }
 
+    /**
+     * Find by PK
+     * @param unknown $id
+     * @return Ambigous <multitype:, Application_Model_ModelCollection, Application_Model_ModelAbstract>
+     */
     public function find($id)
     {
         return $this->createCollection($this->getDbTable()->find($id));
     }
 
+    /**
+     * fetchAll record
+     * @param string $select
+     * @return Ambigous <multitype:, Application_Model_ModelCollection, Application_Model_ModelAbstract>
+     */
     public function fetchAll($select = null)
     {
         $table = $this->getDbTable();
@@ -193,24 +226,42 @@ class Application_Model_Mapper_MapperAbstract
         return $this->createCollection($table->fetchAll($select));
     }
 
-    public function fetchAllUser($select = null)
+    /**
+     * get SQL
+     * @return Zend_Db_Table_Select
+     */
+    public function getSqlSelect()
     {
-        if (null == $select) {
-            $select = $this->getDbTable()->select();
-        }
-        $select->order('StartTime');
-        return $this->fetchAll($select);
+        return $this->getDbTable()->select();
     }
 
-    public function findByProduct($product)
+    /**
+     * get db adapter
+     * @return Zend_Db_Adapter_Abstract
+     */
+    public function getDbAdapter()
     {
-        $select = $this->getDbTable()->select();
-        $select->where('ProductCode=?', $product);
-        return $this->fetchAll($select);
+        return $this->getDbTable()->getAdapter();
     }
 
+    /**
+     * magic call
+     * handle:
+     *     findBy{PropertyName}
+     *     find{Resource}By{Model}  => call {Resource}Mapper::findBy{Model}($model)
+     * @param unknown $method
+     * @param unknown $params
+     * @throws RuntimeException
+     * @return Ambigous <multitype:, Application_Model_ModelCollection, Application_Model_ModelAbstract>
+     */
     public function __call($method, $params)
     {
+        if (preg_match('/find([A-Za-z0-9_]+)By([A-Za-z0-9_]+)/', $method, $matches)) {
+            $resourceName = $matches[1];
+            $method = 'findBy' . $matches[2];
+            $resource = $this->loadResource($resourceName, 'mappers');
+            return call_user_func_array(array($resource, $method), $params);
+        }
         $magicMethodFindBy = 'findBy';
         if (false !== ($p = stripos($method, $magicMethodFindBy))) {
             $col = lcfirst(substr($method, $p+strlen($magicMethodFindBy)));
@@ -224,10 +275,5 @@ class Application_Model_Mapper_MapperAbstract
             return $this->fetchAll($select);
         }
         throw new RuntimeException(sprintf('Call undefined method %s::%s', get_class($this), $method));
-    }
-
-    public function getSqlSelect()
-    {
-        return $this->getDbTable()->select();
     }
 }

@@ -23,12 +23,17 @@ $this->placeholder('title')->set($this->title);
 					<th>ID</th>
 					<th>Resource Name</th>
 					<th>Description</th>
+					<th>Actions</th>
 				</tr>
 <?php foreach ($this->resources as $resource) {?>
 				<tr>
 					<td><?php echo $resource->id?></td>
 					<td><a href="<?php echo $this->url(array('controller'=>'resource','action'=>'view','id'=>$resource->id))?>"><?php echo $resource->name?></a></td>
 					<td><?php echo $resource->description?></td>
+					<td>
+						<a href="<?php echo $this->url(array('controller'=>'resource','action'=>'view','id'=>$resource->id))?>">View</a> |
+						<a href="<?php echo $this->url(array('controller'=>'resource','action'=>'edit','id'=>$resource->id))?>">Edit</a>
+					</td>
 				</tr>
 <?php }//endforeach?>
 			</table>

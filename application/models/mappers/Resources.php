@@ -4,7 +4,7 @@
  * @author Ken
  *
  */
-class Application_Model_Mapper_ResourceMapper extends Application_Model_Mapper_MapperAbstract
+class Application_Model_Mapper_Resources extends Application_Model_Mapper_MapperAbstract
 {
     protected $_modelClass = 'Application_Model_Resource';
     protected $_dbTableClass = 'Application_Model_DbTable_Resources';

@@ -7,19 +7,29 @@
 <div class="row">
 	<div class="span4">
 		<h2>用户管理</h2>
-		<p><a href="<?php echo $this->url(array('controller'=>'user','action'=>'profile'), 'default', true)?>">个人页面</a></p>
+		<ul>
+			<li><a href="<?php echo $this->url(array('controller'=>'user','action'=>'list'), 'default', true)?>">用户列表</a></li>
+		</ul>
 		<p><a href="<?php echo $this->url(array('controller'=>'user','action'=>'list'), 'default', true)?>" class="btn btn-success">帐号管理»</a></p>
 	</div>
 
 	<div class="span4">
 		<h2>组织机构管理</h2>
-		<p><a href="<?php echo $this->url(array('controller'=>'role','action'=>'list'), 'default', true)?>">组织机构管理</a></p>
+		<ul>
+			<li><a href="<?php echo $this->url(array('controller'=>'role','action'=>'list'), 'default', true)?>">角色列表</a></li>
+			<li><a href="<?php echo $this->url(array('controller'=>'acl','action'=>'index'), 'default', true)?>">权限设置</a></li>
+		</ul>
 		<p><a href="<?php echo $this->url(array('controller'=>'role','action'=>'index'), 'default', true)?>" class="btn btn-success">组织机构管理  »</a></p>
 	</div>
 
 	<div class="span4">
 		<h2>系统设置</h2>
-		<p>系统设置</p>
+
+		<ul>
+			<li><a href="<?php echo $this->url(array('controller'=>'resource','action'=>'list'), 'default', true)?>">系统资源</a></li>
+			<li><a href="<?php echo $this->url(array('controller'=>'acl','action'=>'index'), 'default', true)?>">权限设置</a></li>
+		</ul>
+
 		<p><a href="<?php echo $this->url(array('controller'=>'acl','action'=>'index'), 'default', true)?>" class="btn btn-success">权限设置  »</a></p>
 	</div>
 

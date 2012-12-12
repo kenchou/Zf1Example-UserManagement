@@ -25,7 +25,7 @@ class ResourceController extends Zend_Controller_Action
         $module = $this->_request->getModuleName();
         $controller = $this->_request->getControllerName();
 
-        $resourceResource = $this->_helper->modelResource('ResourceMapper');
+        $resourceResource = $this->_helper->modelResource('Resources');
         $resources = $resourceResource->fetchAll();
         $this->view->resources = $resources;
     }
@@ -41,7 +41,7 @@ class ResourceController extends Zend_Controller_Action
         if (empty($id)) {
             throw new RuntimeException('Missing parameter id.');
         }
-        $resourceResource = $this->_helper->modelResource('ResourceMapper');
+        $resourceResource = $this->_helper->modelResource('Resources');
         $resource = $resourceResource->find($id)->current();
 
         if (empty($resource)) {
@@ -66,31 +66,29 @@ class ResourceController extends Zend_Controller_Action
             throw new RuntimeException('Missing parameter id.');
         }
 
-        $resourceResource = $this->_helper->modelResource('ResourceMapper');
-        $resource = $resourceResource->find($id)->current();
-        if (empty($resource)) {
+        $resourceResource = $this->_helper->modelResource('Resources');
+        $resource = $resourceResource->find($id);
+        if (!count($resource)) {
             throw new RuntimeException('Cannot found resource ' . $id);
         }
+        $resource = $resource->getIterator()->current();
 
         $form = $this->_helper->form();
         $request = $this->getRequest();
         if ($request->isPost() && $form->isValid($request->getPost())) {
             $data = $form->getValues();
-
             unset($data['id']);    //unset data for zf 1.6
-            $resource->setData($data);
+            $resource->populate($data);
             if (!$resource->save()) {
                 throw new RuntimeException('Save Resource failure!');
             }
-
-            $this->logOperation("Edit resource($resource->Id):\"{$resource->name}\"");
 
             $this->_helper->flashMessenger("Save Resource \"{$resource->name}\" successful!");
             $this->view->messages = $this->_helper->flashMessenger->getCurrentMessages();
             $this->_helper->flashMessenger->clearCurrentMessages();
         }
         $form->setDefaults($resource->toArray());
-        $form->setDefault('id', $resource->Id);
+        $form->setDefault('id', $resource->id);
         $this->view->form = $form;
     }
 
@@ -108,8 +106,8 @@ class ResourceController extends Zend_Controller_Action
         if ($request->isPost() && $form->isValid($request->getPost())) {
             $data = $form->getValues();
 
-            /* @var $resourceResource Application_Model_Mapper_ResourceMapper */
-            $resourceResource = $this->_helper->modelResource('ResourceMapper');
+            /* @var $resourceResource Application_Model_Mapper_Resources */
+            $resourceResource = $this->_helper->modelResource('Resources');
 
             $resource = $resourceResource->findByName($data['name']);
             if (count($resource)) {
@@ -143,7 +141,7 @@ class ResourceController extends Zend_Controller_Action
             throw new RuntimeException('Missing parameter id.');
         }
 
-        $resourceResource = $this->_helper->modelResource('ResourceMapper');
+        $resourceResource = $this->_helper->modelResource('Resources');
 
         $resources = $resourceResource->find($id);
         $logInfo = array();
@@ -175,7 +173,7 @@ class ResourceController extends Zend_Controller_Action
      */
     public function importAction()
     {
-        $resourceResource = $this->_helper->modelResource('ResourceMapper');
+        $resourceResource = $this->_helper->modelResource('Resources');
         $resources = $resourceResource->fetchAll();
 
         $registered = array();
@@ -209,7 +207,7 @@ class ResourceController extends Zend_Controller_Action
         if (empty($resourceId)) {
             throw new InvalidArgumentException('missing param "resourceId".');
         }
-        $Resource = $this->_helper->modelResource('ResourceMapper');
+        $Resource = $this->_helper->modelResource('Resources');
         /* @var $resource Application_Model_Resource */
         $resource = current($Resource->find($resourceId));
 

@@ -21,6 +21,7 @@ production:
                 Application_Controller_Action_Helper: APPLICATION_PATH/helpers
             plugins:
                 - Ken_Controller_Plugin_Auth
+                - Ken_Controller_Plugin_Acl
         layout:
             layoutPath: APPLICATION_PATH/views/scripts/
         view:
@@ -47,7 +48,7 @@ production:
                     name: "Core"
                     customFrontendNaming: false
                     options:
-                        caching: true
+                        caching: false
                         lifetime: 7200
                         automatic_serialization: true
                 backend:
@@ -58,7 +59,7 @@ production:
                     customFrontendNaming: false
                     name: "Core"
                     options:
-                        caching: true
+                        caching: false
                         lifetime: 7200
                         automatic_serialization: true
                 backend:

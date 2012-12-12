@@ -4,10 +4,10 @@
  * @author Ken
  *
  */
-class Application_Model_AdminAclRule extends Application_Model_ModelAbstract
+class Application_Model_AclRule extends Application_Model_ModelAbstract
 {
-    protected $_defaultResourceName = 'AclMapper';
-    protected $_mapperClass = 'Application_Model_Mapper_AclMapper';
+    protected $_defaultResourceName = 'Acl';
+    protected $_mapperClass = 'Application_Model_Mapper_Acl';
 
     protected $_properties = array(
         'id',

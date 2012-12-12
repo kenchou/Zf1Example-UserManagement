@@ -42,6 +42,11 @@ class Application_Model_ModelAbstract extends ArrayObject
         return $resource;
     }
 
+    /**
+     * populate model
+     * @param array $data
+     * @return Application_Model_ModelAbstract
+     */
     public function populate($data = array())
     {
         foreach ($data as $k => $v) {
@@ -50,15 +55,35 @@ class Application_Model_ModelAbstract extends ArrayObject
         return $this;
     }
 
+    /**
+     * find and populate data from dataSource
+     * @param int $id
+     */
+    public function find($id)
+    {
+        $model = $this->getMapper()->find($id)->getIterator()->current();
+        foreach ($model as $key => $value) {
+            $this->$key = $value;
+        }
+        return $this;
+    }
+
+    /**
+     * export model as array
+     * @return array
+     */
     public function toArray()
     {
         return $this->getArrayCopy();
     }
 
+    /**
+     * Persistence. save model to db
+     * @return Application_Model_ModelAbstract
+     */
     public function save()
     {
-        $resource = $this->getMapper();
-        $resource->save($this);
+        $this->getMapper()->save($this);
         return $this;
     }
 }

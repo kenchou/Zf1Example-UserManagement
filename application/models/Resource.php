@@ -6,8 +6,8 @@
  */
 class Application_Model_Resource extends Application_Model_ModelAbstract
 {
-    protected $_defaultResourceName = 'ResourceMapper';
-    protected $_mapperClass = 'Application_Model_Mapper_ResourceMapper';
+    protected $_defaultResourceName = 'Resources';
+    protected $_mapperClass = 'Application_Model_Mapper_Resources';
 
 	public function getAcls()
 	{

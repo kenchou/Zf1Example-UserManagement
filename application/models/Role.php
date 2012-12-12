@@ -1,8 +1,8 @@
 <?php
 class Application_Model_Role extends Application_Model_ModelAbstract
 {
-    protected $_defaultResourceName = 'RoleMapper';
-    protected $_mapperClass = 'Application_Model_Mapper_RoleMapper';
+    protected $_defaultResourceName = 'Roles';
+    protected $_mapperClass = 'Application_Model_Mapper_Roles';
 
     protected $_properties = array(
         'id',

@@ -18,7 +18,7 @@ class ProfileController extends Zend_Controller_Action
         if (Zend_Auth::getInstance()->hasIdentity()) {
             $sessionUser = Zend_Auth::getInstance()->getIdentity();
             $id = $sessionUser->id;
-            $resource = $this->_helper->modelResource('UserMapper');
+            $resource = $this->_helper->modelResource('Users');
             $user = $resource->find($id)->getIterator()->current();
 
             $this->view->user = $user;
@@ -34,7 +34,7 @@ class ProfileController extends Zend_Controller_Action
 
             $data = $form->getValues();
 
-            $userResource = $this->_helper->modelResource('UserMapper');
+            $userResource = $this->_helper->modelResource('Users');
             $user = $userResource->createModel($data);
 
             //$user->save();

@@ -4,10 +4,9 @@
  * @author Ken
  *
  */
-class Application_Model_Mapper_UserMapper extends Application_Model_Mapper_MapperAbstract
+class Application_Model_Mapper_Users extends Application_Model_Mapper_MapperAbstract
 {
     protected $_modelClass = 'Application_Model_User';
-    protected $_dbTableNamespace = 'Application_Model_DbTable';
     protected $_dbTableClass = 'Application_Model_DbTable_Users';
     protected $_dbTableName = 'Users';
 
