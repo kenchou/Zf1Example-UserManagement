@@ -1,5 +1,5 @@
 <?php
-abstract class Ken_Controller_Plugin_Acl_Adapter_Abstract
+abstract class Application_Plugin_Acl_Adapter_Abstract
 {
     /**
      * @var Zend_Controller_Request_Abstract

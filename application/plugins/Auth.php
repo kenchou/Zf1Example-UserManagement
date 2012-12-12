@@ -4,7 +4,7 @@
  * Auth Plugin
  *
  */
-class Ken_Controller_Plugin_Auth extends Zend_Controller_Plugin_Abstract
+class Application_Plugin_Auth extends Zend_Controller_Plugin_Abstract
 {
     /**
      * @var Zend_Log
@@ -33,9 +33,16 @@ class Ken_Controller_Plugin_Auth extends Zend_Controller_Plugin_Abstract
                 return;
             case 'user':
                 $action = $request->getActionName();
-                if (in_array($action, array('index', 'register'))) {
+                if (in_array($action, array('index'))) {
                     return;
                 }
+                break;
+            case 'member':
+                $action = $request->getActionName();
+                if (in_array($action, array('register'))) {
+                    return;
+                }
+                break;
             default:
                 break;
         }

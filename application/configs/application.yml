@@ -11,6 +11,8 @@ production:
     appnamespace: "Application"
     autoloaderNamespaces:
         - Ken
+    pluginPaths:
+        Application_Plugin: APPLICATION_PATH/plugins/
 
     resources:
         frontController:
@@ -20,8 +22,8 @@ production:
             actionhelperpaths:
                 Application_Controller_Action_Helper: APPLICATION_PATH/helpers
             plugins:
-                - Ken_Controller_Plugin_Auth
-                - Ken_Controller_Plugin_Acl
+                - Application_Plugin_Auth
+                - Application_Plugin_Acl
         layout:
             layoutPath: APPLICATION_PATH/views/scripts/
         view:

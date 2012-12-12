@@ -1,0 +1,18 @@
+<?php
+
+/**
+ * Default home page view
+ *
+ * @author
+ * @version
+ */
+
+?>
+
+<div>
+	<ul>
+		<li><a href="<?php echo $this->url(array('controller'=>'user','action'=>'list'), 'default', true)?>">Account</a></li>
+		<li><a href="<?php echo $this->url(array('controller'=>'role','action'=>'list'), 'default', true)?>">Role</a></li>
+		<li><a href="<?php echo $this->url(array('controller'=>'resource','action'=>'list'), 'default', true)?>">Resource</a></li>
+	</ul>
+</div>

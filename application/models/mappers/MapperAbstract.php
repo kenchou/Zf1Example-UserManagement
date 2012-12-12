@@ -72,11 +72,13 @@ class Application_Model_Mapper_MapperAbstract
      * @param array $data
      * @return Application_Model_ModelAbstract
      */
-    public function createModel($data = array())
+    public function createModel($data = array(), $from = null)
     {
         $model = new $this->_modelClass();
-        if ($data) {
+        if ('db' == $from && $data) {
             $this->_colsToModel($model, $data);
+        } else {
+            $model->populate($data);
         }
         return $model;
     }
@@ -90,7 +92,7 @@ class Application_Model_Mapper_MapperAbstract
     {
         $collection = new Application_Model_ModelCollection(array());
         foreach ($resultset as $data) {
-            $collection[] = $this->createModel($data);
+            $collection[] = $this->createModel($data, 'db');
         }
         return $collection;
     }

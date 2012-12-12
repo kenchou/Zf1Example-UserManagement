@@ -29,24 +29,6 @@ class RoleController extends Zend_Controller_Action
     }
 
     /**
-     * display role info and access control list
-     */
-    public function viewAction()
-    {
-        $this->view->title .= ' - View Acl';
-
-        $id = $this->_request->getParam('id');
-        if (empty($id)) throw new InvalidArgumentException('Missing parameter id.');
-
-        $roleResource = new Application_Model_Mapper_Roles();
-        /* @var $role Application_Model_Role */
-        $role = current($roleResource->find($id));
-
-        $acl = $role->getAcl();
-        $this->view->role = $role;
-    }
-
-    /**
      * edit role info
      */
     public function editAction()
@@ -121,18 +103,13 @@ class RoleController extends Zend_Controller_Action
         $id = $this->_getParam('id');
         if (empty($id)) throw new InvalidArgumentException('Missing parameter id.');
 
-        $roleResource = new Application_Model_Mapper_Roles();
+        $roleResource = $this->_helper->modelResource('Roles');
         $roles = $roleResource->find($id);
-        $logInfo = array();
-        foreach ($roles as $role) {
-            $logInfo[] = "\"{$role->name}\"";
-        }
-        if (!$res = $roleResource->delete($roleResource->getAdapter()->quoteInto('id IN (?)', $id))) {
-            throw new RuntimeException('Cannot delete record(s)');
-        }
-        $this->logOperation("Remove $res role(s):" . implode(',', $logInfo));
 
-        $this->_helper->flashMessenger("Remove $res role(s).");
+        foreach ($roles as $role) {
+            $role->delete();
+        }
+
         $this->_helper->viewRenderer->setNoRender();
         $this->_helper->redirector('list');
     }

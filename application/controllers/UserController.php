@@ -18,10 +18,17 @@ class UserController extends Zend_Controller_Action
         // action body
     }
 
-    public function registerAction()
+    public function listAction ()
+    {
+        $userResource = $this->_helper->modelResource('Users');
+        $users = $userResource->fetchAll();
+        $this->view->users = $users;
+    }
+
+    public function addAction()
     {
         /* @var $form Zend_Form */
-        $form = $this->_helper->form();
+        $form = $this->_helper->form('register');
         $request = $this->getRequest();
 
         if ($request->isPost() && $form->isValid($request->getPost())) {
@@ -37,5 +44,22 @@ class UserController extends Zend_Controller_Action
         }
         $this->view->form = $form;
     }
+
+    public function setStatusAction()
+    {
+        $id = $this->_getParam('id');
+        $status = $this->_getParam('status');
+
+        $userResource = $this->_helper->modelResource('Users');
+        $user = $userResource->find($id)->getIterator()->current();
+
+        $user->status = $status;
+        $user->save();
+
+        $this->_helper->viewRenderer->setNoRender();
+
+        $this->_helper->redirector('list');
+    }
+
 }
 

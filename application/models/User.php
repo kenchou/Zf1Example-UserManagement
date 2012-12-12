@@ -7,10 +7,31 @@
  */
 class Application_Model_User extends Application_Model_ModelAbstract
 {
+    const STATUS_NORMAL = 0;
+    const STATUS_DISABLED = 1;
+    const STATUS_UNVALIDATED = 2;
+
+    protected $_status = array(
+        self::STATUS_NORMAL => 'Normal',
+        self::STATUS_DISABLED => 'Disabled',
+        self::STATUS_UNVALIDATED => 'Unvalidated',
+    );
+
     protected $_defaultResourceName = 'Users';
     protected $_mapperClass = 'Application_Model_Mapper_Users';
 
     public static $staticSalt = 'Kq6Dc%TX$2*xv3C^*jn$&gjXSfwPK8r^Q$E3faQpkuY9S6n4%8yYeshNMjXnT4ms';
+
+    /**
+     * get user status
+     * @param int $code
+     * @return string
+     */
+    public function getStatusText()
+    {
+        $code = $this->status;
+        return isset($this->_status[$code]) ? $this->_status[$code] : 'Unknown';
+    }
 
     /**
      * create random string as password salt
@@ -46,7 +67,7 @@ class Application_Model_User extends Application_Model_ModelAbstract
      */
     public function save ()
     {
-        if (strlen($this->password)) {
+        if (isset($this->password) && strlen($this->password)) {
             $this->salt = $this->salt(); //new salt if change password
             $this->password = $this->passwordHash($this->password,
                     $this->salt);

@@ -1,6 +1,6 @@
 <?php
 
-class Ken_Controller_Plugin_Acl_Adapter_Default extends Ken_Controller_Plugin_Acl_Adapter_Abstract
+class Application_Plugin_Acl_Adapter_Default extends Application_Plugin_Acl_Adapter_Abstract
 {
     /**
      * Gets the acl role

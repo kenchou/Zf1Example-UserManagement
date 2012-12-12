@@ -49,9 +49,9 @@ auth:
                                 tag: "dd"
                                 class: "singleButton"
 ###############
-# User forms
+# Member forms
 ###############
-user:
+member:
     register:
         action: /{module}/{controller}/{action}
         method: "post"
@@ -128,10 +128,7 @@ user:
                             options:
                                 tag: "dd"
                                 class: "singleButton"
-###################
-# member profile
-###################
-profile:
+
     edit:
         action: /{module}/{controller}/{action}
         method: "post"
@@ -150,7 +147,6 @@ profile:
                             extension: "jpg,jpeg,png,gif"
                             messages:
                                 fileExtensionFalse: "It only supports jpg,jpeg,png,gif format."
-
             realname:
                 type: "text"
                 options:
@@ -183,7 +179,6 @@ profile:
                             filter: "StringToLower"
                         trim:
                             filter: "StringTrim"
-
             submit:
                 type: "submit"
                 options:

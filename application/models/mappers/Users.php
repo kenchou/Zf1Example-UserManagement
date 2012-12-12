@@ -23,6 +23,13 @@ class Application_Model_Mapper_Users extends Application_Model_Mapper_MapperAbst
         //'passwordHash' => 'password',
     );
 
+    public function createModel($data = array(), $from = null)
+    {
+        $model = parent::createModel($data, $from);
+        $model->password = null;
+        return $model;
+    }
+
     public function save(Application_Model_User $model)
     {
         $data = $this->_modelToCols($model);

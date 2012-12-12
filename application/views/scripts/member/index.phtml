@@ -28,7 +28,7 @@ $this->placeholder('title')->set($this->title);
 		<dl>
 		<?php if (count($this->roles)):?>
 		<?php foreach ($this->roles as $role):?>
-			<dt><?php echo $role->rolename;?></dt>
+			<dt><?php echo $role->name;?></dt>
 			<dd><?php echo $role->description;?></dd>
 		<?php endforeach;?>
 		<?php else:?>

@@ -3,7 +3,7 @@
  * Acl Plugin
  *
  */
-class Ken_Controller_Plugin_Acl extends Zend_Controller_Plugin_Abstract
+class Application_Plugin_Acl extends Zend_Controller_Plugin_Abstract
 {
     const ALL_RESOURCES = '__ALL__';
     const ALL_ACTIONS = '__ALL__';
@@ -23,15 +23,15 @@ class Ken_Controller_Plugin_Acl extends Zend_Controller_Plugin_Abstract
      */
     protected $_logger;
     /**
-     * @var Ken_Controller_Plugin_Acl_Adapter_Abstract
+     * @var Application_Plugin_Acl_Adapter_Abstract
      */
     protected $_adapter;
     protected $_noAcl = array('index', 'index.index', 'error', 'error.forbidden', 'error.error' , 'user.login' , 'user.logout');
 
     public function getAdapter()
     {
-        if (!$this->_adapter instanceof Ken_Controller_Plugin_Acl_Adapter_Abstract) {
-            $this->setAdapter('Ken_Controller_Plugin_Acl_Adapter_Default');
+        if (!$this->_adapter instanceof Application_Plugin_Acl_Adapter_Abstract) {
+            $this->setAdapter('Application_Plugin_Acl_Adapter_Default');
         }
         return $this->_adapter;
     }
@@ -111,7 +111,7 @@ class Ken_Controller_Plugin_Acl extends Zend_Controller_Plugin_Abstract
             throw new RuntimeException('ACL has not been initializated.');
         }
         // pass request to adapter
-        /* @var $adapter Ken_Controller_Plugin_Acl_Adapter_Default */
+        /* @var $adapter Application_Plugin_Acl_Adapter_Default */
         $adapter = $this->getAdapter()->setRequest($request);
         $role      = $adapter->getRole();
         $resource  = $adapter->getResource();
@@ -196,17 +196,19 @@ class Ken_Controller_Plugin_Acl extends Zend_Controller_Plugin_Abstract
 
         //whitelist, internal resource
         if (!$acl->has('auth')) $acl->add(new Zend_Acl_Resource('auth'));
-        if (!$acl->has('profile')) $acl->add(new Zend_Acl_Resource('profile'));
+        if (!$acl->has('member')) $acl->add(new Zend_Acl_Resource('member'));
         if (!$acl->has('user')) $acl->add(new Zend_Acl_Resource('user'));
         if (!$acl->has('index')) $acl->add(new Zend_Acl_Resource('index'));
         if (!$acl->has('error')) $acl->add(new Zend_Acl_Resource('error'));
 
         //white list
         $acl->allow(null, 'user', 'index');
+        $acl->allow(null, 'user', 'register');
+        $acl->allow(null, 'user', 'passwd');
+
         $acl->allow(null, 'auth', 'login');
         $acl->allow(null, 'auth', 'logout');
-        $acl->allow(null, 'profile');
-        $acl->allow(null, 'user', 'passwd');
+        $acl->allow(null, 'member');
         $acl->allow(null, 'index');
         $acl->allow(null, 'error');
 

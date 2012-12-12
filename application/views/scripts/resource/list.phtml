@@ -10,6 +10,7 @@
 $this->headTitle($this->title);
 $this->placeholder('title')->set($this->title);
 ?>
+<?php echo $this->render('acl/_tabs.phtml')?>
 <?php echo $this->render('resource/_toolbar.phtml')?>
 
 <div class="ui-tabs ui-widget ui-widget-content ui-corner-all" id="tabs">
