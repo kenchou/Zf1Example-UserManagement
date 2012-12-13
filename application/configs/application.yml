@@ -11,15 +11,15 @@ production:
     appnamespace: "Application"
     autoloaderNamespaces:
         - Ken
-    pluginPaths:
-        Application_Plugin: APPLICATION_PATH/plugins/
+#    pluginPaths:
+#        Application_Plugin: APPLICATION_PATH/plugins/  # default plugin defined in Module_Autoloader 
 
     resources:
         frontController:
             controllerDirectory: APPLICATION_PATH/controllers
             params:
                 displayExceptions: false
-            actionhelperpaths:
+            actionHelperPaths:
                 Application_Controller_Action_Helper: APPLICATION_PATH/helpers
             plugins:
                 - Application_Plugin_Auth
@@ -33,7 +33,7 @@ production:
             helperPath:
                 Application_View_Helper: APPLICATION_PATH/views/helpers
         multidb:
-            defaultMetadataCache: "metadata"
+            defaultMetadataCache: "metadata"    # use cachemanager: metadata
             default:
                 adapter: "Pdo_Mysql"
                 host: "127.0.0.1"
@@ -50,7 +50,7 @@ production:
                     name: "Core"
                     customFrontendNaming: false
                     options:
-                        caching: false
+                        caching: false      # enable/disable cache
                         lifetime: 7200
                         automatic_serialization: true
                 backend:
@@ -61,7 +61,7 @@ production:
                     customFrontendNaming: false
                     name: "Core"
                     options:
-                        caching: false
+                        caching: false      # enable/disable cache
                         lifetime: 7200
                         automatic_serialization: true
                 backend:
@@ -73,17 +73,24 @@ production:
                 writerParams:
                     application: "example"
 
-    staticSalt: "Dck2GC@9mXKyCX&jbaJUt$^bB*2Ds3ec"
-    
+########################
+# staging env
+########################
 staging:
     _extends: production
 
+########################
+# qa env
+########################
 testing:
     _extends: production
     phpSettings:
         display_startup_errors: true
         display_errors: true
 
+########################
+# dev env
+########################
 development:
     _extends: production
     phpSettings:

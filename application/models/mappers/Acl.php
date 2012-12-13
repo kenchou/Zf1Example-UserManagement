@@ -11,46 +11,29 @@ class Application_Model_Mapper_Acl extends Application_Model_Mapper_MapperAbstra
     protected $_dbTableName = 'Acl';
 
     protected $_colsMap = array(
-        'id' => 'acl_id',
-        'roleId' => 'role_id',
-        'roleName' => 'role_name',
-        'resourceId' => 'resource_id',
+        'id'           => 'acl_id',
+        'roleId'       => 'role_id',
+        'resourceId'   => 'resource_id',
+        'action'       => 'action',
+        'permit'       => 'permit',
+        'roleName'     => 'rolename',
         'resourceName' => 'resource_name',
-        'action' => 'action',
-        'permit' => 'permit',
     );
 
-    public function fetchRowByName($name)
+    public function findDetail($roleId = null, $resourceId = null, $action = null)
     {
-        $select = $this->getDbTable()->select();
-        $select->where('role_name=?', $name);
-        return $this->fetchRow($select);
-    }
-
-    public function fetchRowByRoleAndResource($roleId, $resourceId, $action = null)
-    {
-        $select = $this->getDbTable()->select();
-        $select->where('role_id=?', $roleId)
-               ->where('resource_id=?', $resourceId);
-        if (null !== $action) {
-            $select->where('action=?',$action);
+        $table = $this->getDbTable();
+        $select = $this->getSqlSelect()->setIntegrityCheck(false);
+        $select->from(array('i' => $table->info('name')))
+               ->join(array('ro' => 'roles'), 'i.role_id=ro.id')
+               ->join(array('rs' => 'resources'), 'i.resource_id=rs.id');
+        if ($roleId) {
+            $select->where('role_id=?', $roleId);
         }
-        return $this->fetchRow($select);
-    }
-
-    public function cleanByRoleAndResource($roleId, $resourceId, $action = null)
-    {
-        $select = $this->getDbTable()->select();
-        $select->where('role_id=?', $roleId)
-               ->where('resource_id=?', $resourceId);
-        if (null !== $action) {
-            $select->where('action=?',$action);
+        if ($resourceId) {
+            $select->where('resource_id=?', $resourceId);
         }
-        $rows = $this->getDbTable()->fetchAll($select);
-        foreach ($rows as $row) {
-            $row->delete();
-        }
-        return $this;
+        return $this->fetchAll($select);
     }
 
     /**

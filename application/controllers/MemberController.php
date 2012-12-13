@@ -1,6 +1,6 @@
 <?php
 /**
- * User Controller
+ * Member Controller
  *
  * @author Ken
  *

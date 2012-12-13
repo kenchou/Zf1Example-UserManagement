@@ -305,3 +305,88 @@ resource:
                             options:
                                 tag: "dd"
                                 class: "singleButton"
+acl:
+    edit:
+        action: /{module}/{controller}/{action}
+        method: "post"
+        elements:
+            id:
+                type: "hidden"
+                options: # hidden element decorators
+                    decorators:
+                        viewHelper: "ViewHelper"
+                        htmlTag:
+                            decorator: "HtmlTag"
+                            options:
+                                tag: "dd"
+                                class: "hiddenElement"
+            roleName:
+                type: "text"
+                options:
+                    label: "Resource Name"
+                    required: true
+                    validators:
+                        strlen:
+                            validator: "StringLength"
+                            options: 
+                                min: 3
+                                max: 255
+                    filters:
+                        lower:
+                            filter: "StringToLower"
+                        trim:
+                            filter: "StringTrim"
+            resourceName:
+                type: "text"
+                options:
+                    label: "Resource Name"
+                    required: true
+                    validators:
+                        strlen:
+                            validator: "StringLength"
+                            options: 
+                                min: 3
+                                max: 255
+                    filters:
+                        lower:
+                            filter: "StringToLower"
+                        trim:
+                            filter: "StringTrim"
+            action:
+                type: "text"
+                options:
+                    label: "Actiuon"
+                    required: true
+                    validators:
+                        strlen:
+                            validator: "StringLength"
+                            options: 
+                                max: 255
+                    filters:
+                        lower:
+                            filter: "StringToLower"
+                        trim:
+                            filter: "StringTrim"
+            permit:
+                type: "text"
+                options:
+                    label: "Permit"
+                    required: true
+                    filters:
+                        lower:
+                            filter: "StringToLower"
+                        trim:
+                            filter: "StringTrim"
+
+            submit:
+                type: "submit"
+                options:
+                    label: "Save"
+                    ignore: true
+                    decorators:
+                        viewHelper: "ViewHelper"
+                        htmlTag:
+                            decorator: "HtmlTag"
+                            options:
+                                tag: "dd"
+                                class: "singleButton"

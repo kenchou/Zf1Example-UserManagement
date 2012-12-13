@@ -1,5 +1,9 @@
 <?php
-
+/**
+ * Error Controller
+ * @author Ken
+ *
+ */
 class ErrorController extends Zend_Controller_Action
 {
 

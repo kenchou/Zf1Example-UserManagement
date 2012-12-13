@@ -1,0 +1,51 @@
+<?php
+
+/**
+ * Default home page view
+ *
+ * @author
+ * @version
+ */
+
+$this->headTitle($this->title);
+$this->placeholder('title')->set($this->title);
+?>
+<?php echo $this->render('acl/_tabs.phtml')?>
+<?php echo $this->render('acl/_toolbar.phtml')?>
+
+<div class="ui-tabs ui-widget ui-widget-content ui-corner-all" id="tabs">
+	<div class="ui-tabs-panel ui-widget-content ui-corner-bottom">
+
+		<form id="listform" action="<?php echo $this->url(array('module' => 'admin', 'controller' => 'role', 'action' => 'delete'), null, true);?>" method="post">
+		<div class="datagrid listTable dateList">
+<?php if ($this->aclRules) {?>
+			<table border="1">
+				<caption>Access Control List</caption>
+				<tr>
+					<th>ID</th>
+					<th>Role Name</th>
+					<th>Resource</th>
+					<th>Action</th>
+					<th>Permit</th>
+					<th>Actions</th>
+				</tr>
+<?php foreach ($this->aclRules as $rule) {?>
+				<tr>
+					<td><?php echo $rule->id?></td>
+					<td><a href="<?php echo $this->url(array('controller'=>'role','action'=>'authorize','roleId'=>$rule->id))?>"><?php echo $rule->roleName?></a></td>
+					<td><?php echo $rule->resourceName?></td>
+					<td><?php echo $rule->action?></td>
+					<td><?php echo $rule->permit?></td>
+					<td>
+						<a href="<?php echo $this->url(array('controller'=>'role','action'=>'edit','id'=>$rule->id))?>">Edit</a> |
+						<a href="<?php echo $this->url(array('controller'=>'role','action'=>'authorize','roleId'=>$rule->id))?>">Delete</a>
+					</td>
+				</tr>
+<?php }//endforeach?>
+			</table>
+<?php }//endif?>
+		</div>
+		</form>
+		<div class="pannelFloat"></div>
+	</div>
+</div>

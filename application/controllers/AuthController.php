@@ -1,7 +1,7 @@
 <?php
 /**
  * Auth Controller
- *
+ * login/logout
  * @author Ken
  *
  */

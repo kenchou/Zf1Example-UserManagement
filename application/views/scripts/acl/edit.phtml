@@ -1,0 +1,23 @@
+<?php
+
+/**
+ * Default home page view
+ *
+ * @author
+ * @version
+ */
+
+$this->headTitle($this->title);
+$this->placeholder('title')->set($this->title);
+?>
+<?php echo $this->render('acl/_tabs.phtml')?>
+
+<div class="ui-tabs ui-widget ui-widget-content ui-corner-all" id="tabs">
+	<?php echo $this->render('resource/_toolbar.phtml');?>
+
+	<div class="ui-tabs-panel ui-widget-content ui-corner-bottom">
+		<div class="editform">
+		<?php echo $this->form;?>
+		</div>
+    </div>
+</div>
