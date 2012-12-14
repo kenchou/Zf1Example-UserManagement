@@ -84,9 +84,7 @@ member:
                     required: true
                     validators:
                         regex:
-                            validator: "regex"
-                            options:
-                                pattern: "/^[a-zA-Z_][a-zA-Z0-9_@\.-]*$/"
+                            validator: "EmailAddress"
                         strlen:
                             validator: "StringLength"
                             options:

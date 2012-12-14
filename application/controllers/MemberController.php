@@ -44,9 +44,9 @@ class MemberController extends Zend_Controller_Action
             $userResource = $this->_helper->modelResource('Users');
             $user = $userResource->createModel();
             $user->populate($data);
-Zend_Debug::dump($user);
-            $user->save();
 
+            $user->save();
+            $this->_helper->redirector('login', 'auth');
         }
         $this->view->form = $form;
     }
@@ -63,7 +63,7 @@ Zend_Debug::dump($user);
             $userResource = $this->_helper->modelResource('Users');
             $user = $userResource->createModel($data);
 
-            //$user->save();
+            $user->save();
 
         }
         $this->view->form = $form;

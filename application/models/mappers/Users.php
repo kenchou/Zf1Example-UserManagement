@@ -36,7 +36,7 @@ class Application_Model_Mapper_Users extends Application_Model_Mapper_MapperAbst
         if (null === $model->password) {
             unset($data['password']);
         }
-        if (null === $model->status) {
+        if (!isset($model->status)) {
             $data['status'] = 0;
         }
         $row = $this->_fetchRowOrCreate($data);
