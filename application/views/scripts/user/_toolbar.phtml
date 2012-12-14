@@ -9,9 +9,9 @@
 
 ?>
 
-<div>
-	<ul>
-		<li><a href="<?php echo $this->url(array('controller'=>'user','action'=>'add'), 'default', true)?>">Create Account</a></li>
-		<li><a href="<?php echo $this->url(array('controller'=>'user','action'=>'list'), 'default', true)?>">List</a></li>
-	</ul>
+<div class="btn-toolbar">
+	<div class="btn-group">
+		<a class="btn" href="<?php echo $this->url(array('controller'=>'user','action'=>'add'), 'default', true)?>">Create Account</a>
+		<a class="btn" href="<?php echo $this->url(array('controller'=>'user','action'=>'list'), 'default', true)?>">List</a>
+	</div>
 </div>

@@ -10,9 +10,15 @@
 $this->headTitle($this->title);
 $this->placeholder('title')->set($this->title);
 ?>
-<div class="ui-tabs ui-widget ui-widget-content ui-corner-all" id="tabs">
-	<div><a href="<?php echo $this->url(array('action'=>'edit'))?>">Edit</a></div>
-	<div class="ui-tabs-panel ui-widget-content ui-corner-bottom">
+
+<div class="btn-toolbar">
+	<div class="btn-group">
+		<a class="btn" href="<?php echo $this->url(array('action'=>'edit'))?>">Edit</a>
+	</div>
+</div>
+
+<div>
+	<div>
 <?php if ($this->user) { $user = $this->user;?>
 		<div class="editform">
 		<h2><?php echo $user->username?> Profile</h2>

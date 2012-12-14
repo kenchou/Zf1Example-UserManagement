@@ -19,7 +19,7 @@ $this->placeholder('title')->set($this->title);
 		<form id="listform" action="<?php echo $this->url(array('module' => 'admin', 'controller' => 'role', 'action' => 'delete'), null, true);?>" method="post">
 		<div class="datagrid listTable dateList">
 <?php if ($this->aclRules) {?>
-			<table border="1">
+			<table class="table table-bordered">
 				<caption>Access Control List</caption>
 				<tr>
 					<th>ID</th>

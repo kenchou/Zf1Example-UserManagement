@@ -18,8 +18,8 @@ $this->placeholder('title')->set($this->title);
 		<form id="listform" action="<?php echo $this->url(array('module' => 'admin', 'controller' => 'user', 'action' => 'delete'), null, true);?>" method="post">
 
 		<div class="datagrid dateList">
-			<table border="1">
-				<caption>Resource list</caption>
+			<table class="table table-bordered">
+				<caption>User list</caption>
 				<tr>
 					<th>ID</th>
 					<th>Username</th>

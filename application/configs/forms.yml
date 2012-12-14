@@ -41,6 +41,7 @@ auth:
                 options:
                     label: "Login"
                     ignore: true
+                    class: "btn"
                     decorators:
                         viewHelper: "ViewHelper"
                         htmlTag:
@@ -121,6 +122,7 @@ member:
                 options:
                     label: "Register"
                     ignore: true
+                    class: "btn"
                     decorators:
                         viewHelper: "ViewHelper"
                         htmlTag:
@@ -184,6 +186,7 @@ member:
                 options:
                     label: "Update"
                     ignore: true
+                    class: "btn"
                     decorators:
                         viewHelper: "ViewHelper"
                         htmlTag:
@@ -247,6 +250,7 @@ role:
                 options:
                     label: "Save"
                     ignore: true
+                    class: "btn"
                     decorators:
                         viewHelper: "ViewHelper"
                         htmlTag:
@@ -298,6 +302,7 @@ resource:
                 options:
                     label: "Save"
                     ignore: true
+                    class: "btn"
                     decorators:
                         viewHelper: "ViewHelper"
                         htmlTag:
@@ -383,6 +388,7 @@ acl:
                 options:
                     label: "Save"
                     ignore: true
+                    class: "btn"
                     decorators:
                         viewHelper: "ViewHelper"
                         htmlTag:
